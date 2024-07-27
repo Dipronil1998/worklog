@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "c6db426a-6bd5-47ea-9ef0-79b64e5f7404",
+		"name": "Worklog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12457882"
+	},
+	"item": [
+		{
+			"name": "worklog",
+			"item": [
+				{
+					"name": "worklog",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectId\": \"66a50807a40453cbc0e7e5e7\",\n    \"remarks\": \"start the task successfully.\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/worklog",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"worklog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all worklos for all employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/worklog",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"worklog"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-07-25",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2024-07-26",
+									"disabled": true
+								},
+								{
+									"key": "userId",
+									"value": "66a4a079934a75ea4ee9ee58",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Add Employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"Krishendu Mondol\",\n    \"email\": \"krishnendu.mondal@techwens.in\",\n    \"phone\": \"9999999999\",\n    \"password\": \"dipronil\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/employeeCreate",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"employeeCreate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dipronil.das@techwens.in\",\n    // \"phone\": \"1234567890\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/auth/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"123456\",\n    \"confirmPassword\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/changePassword",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/auth/employee",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "project",
+			"item": [
+				{
+					"name": "Create project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"66a53136dab77b583776c8ca\",\n    \"name\": \"New Project\",\n    \"description\": \"This is a new project\",\n    \"userIds\":[\"66a4a079934a75ea4ee9ee57\"]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/project",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/project",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

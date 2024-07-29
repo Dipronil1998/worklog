@@ -10,5 +10,4 @@ COPY . .
 
 EXPOSE 8002
 
-# Command to run your app
 CMD ["npm", "run", "dev"]

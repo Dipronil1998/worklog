@@ -8,7 +8,7 @@ export const handleSuccessMessage = (res:Response, code:number, msg:string, resp
       response,
       ...additional,
     };
-    return res.status(code).json(success);
+    return res.status(200).json(success);
   };
   
   export const handleErrorMessage = (res:Response, code:number, msg:string, additional: Record<string, any>  = {}):Response => {
@@ -19,5 +19,5 @@ export const handleSuccessMessage = (res:Response, code:number, msg:string, resp
       response: 'failed',
       ...additional,
     };
-    return res.status(code || 500).json(error);
+    return res.status(200).json(error);
   };

@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000;
 app.use(cookieParser());
 
 app.get('/', (req:Request, res:Response)=>{
-  res.send('index')
+  res.send('index1')
 })
 
 app.use("/api/auth", authRoutes);

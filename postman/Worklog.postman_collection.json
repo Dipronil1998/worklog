@@ -12,6 +12,16 @@
 				{
 					"name": "worklog",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -38,6 +48,16 @@
 				{
 					"name": "Get all worklos for all employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -77,11 +97,21 @@
 				{
 					"name": "Add Employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fullName\": \"Krishendu Mondol\",\n    \"email\": \"krishnendu.mondal@techwens.in\",\n    \"phone\": \"9999999999\",\n    \"password\": \"dipronil\"\n}\n",
+							"raw": "{\n    \"_id\":\"66a7483e7daa404c6d392093\",\n    \"fullName\": \"Dipronil Das\",\n    \"email\": \"dipronil.das@techwens.in\",\n    \"phone\": \"9804633142\",\n    \"password\": \"12345678\",\n    // \"role\": \"\",\n    \"isFirstTimeUser\":false\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -89,13 +119,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/auth/employeeCreate",
+							"raw": "{{host}}/auth/employee",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"auth",
-								"employeeCreate"
+								"employee"
 							]
 						}
 					},
@@ -103,12 +133,25 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()",
+									"pm.environment.set(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"dipronil.das@techwens.in\",\n    // \"phone\": \"1234567890\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"loginIdentifier\": \"dipronil.das@techwens.in\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,6 +174,16 @@
 				{
 					"name": "Logout",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -149,6 +202,16 @@
 				{
 					"name": "Change Password",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -176,6 +239,16 @@
 				{
 					"name": "Get all employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -190,6 +263,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get employee information",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/auth/employee/66a7213bede4d397a9e785c7",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"employee",
+								"66a7213bede4d397a9e785c7"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -199,6 +301,16 @@
 				{
 					"name": "Create project",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -225,6 +337,16 @@
 				{
 					"name": "Get project",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {

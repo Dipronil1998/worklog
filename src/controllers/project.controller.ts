@@ -96,7 +96,28 @@ export const getProject = async (req: CustomRequest, res: Response, next: NextFu
 
         if (user?.role === 'team_lead' || user?.role === 'manager') {
             projects = await Project.find().populate('reporter', 'fullName email');
-            handleSuccessMessage(res, 200, 'Projects retrieved successfully', projects);
+            // for (const project of projects) {
+            //     const projectMembers = await ProjectMember.find({projectId: project?._id}).populate({
+            //         path: 'userId',
+            //         select: "fullName"
+            //     });
+            //     // var projectsWithEmployees = {project, projectMembers}
+            //     console.log(projectMembers,"projectsWithEmployees");
+                
+            // }
+            const projectsWithMembers = await Promise.all(projects.map(async (project) => {
+                const projectMembers = await ProjectMember.find({ projectId: project._id }).populate('userId', 'fullName').exec() as IProjectMember[];
+                return {
+                    ...project.toObject(),
+                    projectMembers: projectMembers.map(pm => ({
+                        _id: pm._id,
+                        userId: pm.userId,
+                        projectId: pm.projectId,
+                        __v: pm.__v
+                    }))
+                };
+            }));
+            handleSuccessMessage(res, 200, 'Projects retrieved successfully', projectsWithMembers);
         } else if (user?.role === 'employee') {
             const projectMembers = await ProjectMember.find({ userId: user._id }).select('projectId');
             

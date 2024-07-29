@@ -97,3 +97,21 @@ export const getAllWorklogs = async (req:GetWorklogRequest,res:Response,next:Nex
         next(error);
     }
 }
+
+export const getAllWorklogsProjectWise = async (req:WorklogRequest,res:Response,next:NextFunction):Promise<void> =>{
+    try {
+        const projectId = req?.params?.projectId;
+        const userId = req?.user?._id
+
+        const query = {
+            projectId,userId
+        }
+
+        const worklogs = await Worklog.find(query).sort({createdAt: -1})
+        logger.info('Worklogs retrieved successfully by projectwise.');
+        handleSuccessMessage(res, 200, 'Worklogs retrieved successfully by projectwise.', worklogs);
+    } catch (error:any) {
+        logger.error(error.message);
+        next(error);
+    }
+}

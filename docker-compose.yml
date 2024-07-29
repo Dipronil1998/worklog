@@ -1,12 +1,40 @@
+# version: '3.8'
+# services:
+#   server:
+#     image: node:22
+#     working_dir: /app
+#     ports:
+#       - "8001:8001"
+#     env_file:
+#       - .env
+#     volumes:
+#       - .:/app/
+#     command: ["npm", "run", "dev"]
+
+
+
 version: '3.8'
+
 services:
-  server:
-    image: node:22
-    working_dir: /app
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
     ports:
-      - "8001:8001"
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: worklog-app
+    ports:
+      - "8002:8002"
     env_file:
       - .env
-    volumes:
-      - .:/app/
-    command: ["npm", "run", "dev"]
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/worklog
+
+volumes:
+  mongo-data:

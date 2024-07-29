@@ -5,7 +5,7 @@ import { adminPermission } from "../middleware/adminPermission";
 
 const router = express.Router();
 
-router.post("/employeeCreate",protectRoute, adminPermission, employeeCreate);
+router.post("/employeeCreate", employeeCreate);
 
 router.post("/login", login);
 

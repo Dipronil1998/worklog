@@ -1,6 +1,6 @@
 FROM node:22
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
@@ -8,6 +8,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8001
+EXPOSE 8002
 
-CMD [ "npm", "run", "dev" ]
+# Command to run your app
+CMD ["npm", "run", "dev"]

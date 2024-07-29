@@ -84,7 +84,7 @@ export const getAllWorklogs = async (req:GetWorklogRequest,res:Response,next:Nex
         })
         .populate({
             path: 'projectId', 
-            select: 'name, reporter',
+            select: 'name reporter',
             populate: {
                 path: 'reporter',
                 select: 'fullName'
@@ -101,10 +101,14 @@ export const getAllWorklogs = async (req:GetWorklogRequest,res:Response,next:Nex
 export const getAllWorklogsProjectWise = async (req:WorklogRequest,res:Response,next:NextFunction):Promise<void> =>{
     try {
         const projectId = req?.params?.projectId;
-        const userId = req?.user?._id
+        const userId = req?.user?._id;
 
-        const query = {
-            projectId,userId
+        const now = new Date();
+        const start = new Date(now.setHours(0, 0, 0, 0));
+        const end = new Date(now.setHours(23, 59, 59, 999));
+
+        const query:any = {
+            projectId,userId,startTime: { $gte: start, $lte: end }
         }
 
         const worklogs = await Worklog.find(query).sort({createdAt: -1})

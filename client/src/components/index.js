@@ -8,6 +8,8 @@ import BigSidebar from './BigSidebar';
 import SearchContainer from './SearchContainer';
 import JobsContainer from './EmployeesContainer';
 import Loading from './Loading';
+import AddEmployee from './AddEmployee';
+import EmployeeInfo from './EmployeeInfo'
 
 export {
     Logo,
@@ -20,4 +22,6 @@ export {
     SearchContainer,
     JobsContainer,
     Loading,
+    AddEmployee,
+    EmployeeInfo
 }

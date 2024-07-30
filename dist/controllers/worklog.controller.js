@@ -17,12 +17,13 @@ const mongoose_1 = require("mongoose");
 const worklog_model_1 = __importDefault(require("../models/worklog.model"));
 const logger_1 = __importDefault(require("../services/logger"));
 const responseService_1 = require("../utils/responseService");
+const formatDuration_1 = require("../utils/formatDuration");
 const worklog = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const userId = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a._id;
         const { projectId, remarks } = req.body;
-        let worklogEntry = yield worklog_model_1.default.findOne({ userId, projectId, endTime: { $exists: false } });
+        let worklogEntry = yield worklog_model_1.default.findOne({ userId, projectId, endTime: null });
         if (worklogEntry) {
             worklogEntry.endTime = new Date();
             worklogEntry.remarks = remarks;
@@ -35,6 +36,7 @@ const worklog = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
                 userId,
                 projectId,
                 startTime: new Date(),
+                endTime: null,
                 remarks
             });
             yield newWorklog.save();
@@ -90,6 +92,7 @@ exports.getAllWorklogs = getAllWorklogs;
 const getAllWorklogsProjectWise = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
+        let duration = 0;
         const projectId = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.projectId;
         const userId = (_b = req === null || req === void 0 ? void 0 : req.user) === null || _b === void 0 ? void 0 : _b._id;
         const now = new Date();
@@ -99,8 +102,17 @@ const getAllWorklogsProjectWise = (req, res, next) => __awaiter(void 0, void 0, 
             projectId, userId, startTime: { $gte: start, $lte: end }
         };
         const worklogs = yield worklog_model_1.default.find(query).sort({ createdAt: -1 });
+        worklogs.map(worklog => {
+            const sTime = new Date(worklog.startTime);
+            const eTime = worklog.endTime ? new Date(worklog.endTime) : new Date();
+            duration = duration + Math.abs(eTime.getTime() - sTime.getTime());
+        });
         logger_1.default.info('Worklogs retrieved successfully by projectwise.');
-        (0, responseService_1.handleSuccessMessage)(res, 200, 'Worklogs retrieved successfully by projectwise.', worklogs);
+        (0, responseService_1.handleSuccessMessage)(res, 200, 'Worklogs retrieved successfully by projectwise.', worklogs, {
+            additional: {
+                duration: (0, formatDuration_1.formatDuration)(duration)
+            }
+        });
     }
     catch (error) {
         logger_1.default.error(error.message);

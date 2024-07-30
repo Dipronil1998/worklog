@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import Worklog from '../models/worklog.model'; 
 import logger from "../services/logger";
 import { handleErrorMessage, handleSuccessMessage } from "../utils/responseService";
+import { formatDuration } from "../utils/formatDuration";
 
 interface WorklogRequest extends Request {
     user?: {
@@ -26,7 +27,7 @@ export const worklog = async (req:WorklogRequest,res:Response,next:NextFunction)
         const userId = req?.user?._id
         const { projectId, remarks } = req.body;
         
-        let worklogEntry = await Worklog.findOne({ userId, projectId, endTime: { $exists: false } });
+        let worklogEntry = await Worklog.findOne({ userId, projectId, endTime: null });
 
         if (worklogEntry) {
             worklogEntry.endTime = new Date();
@@ -39,6 +40,7 @@ export const worklog = async (req:WorklogRequest,res:Response,next:NextFunction)
                 userId,
                 projectId,
                 startTime: new Date(),
+                endTime:null,
                 remarks
             });
 
@@ -100,6 +102,7 @@ export const getAllWorklogs = async (req:GetWorklogRequest,res:Response,next:Nex
 
 export const getAllWorklogsProjectWise = async (req:WorklogRequest,res:Response,next:NextFunction):Promise<void> =>{
     try {
+        let duration=0;
         const projectId = req?.params?.projectId;
         const userId = req?.user?._id;
 
@@ -112,8 +115,18 @@ export const getAllWorklogsProjectWise = async (req:WorklogRequest,res:Response,
         }
 
         const worklogs = await Worklog.find(query).sort({createdAt: -1})
+        worklogs.map(worklog => {
+            const sTime = new Date(worklog.startTime);
+            const eTime = worklog.endTime ? new Date(worklog.endTime) : new Date();
+            duration = duration + Math.abs(eTime.getTime() - sTime.getTime());
+        });
+        
         logger.info('Worklogs retrieved successfully by projectwise.');
-        handleSuccessMessage(res, 200, 'Worklogs retrieved successfully by projectwise.', worklogs);
+        handleSuccessMessage(res, 200, 'Worklogs retrieved successfully by projectwise.', worklogs,{
+            additional:{
+                duration: formatDuration(duration)
+            }
+        });
     } catch (error:any) {
         logger.error(error.message);
         next(error);

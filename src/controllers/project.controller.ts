@@ -21,7 +21,7 @@ interface CustomRequest extends Request {
 
 export const createdProject = async (req: ProjectCreateRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { id, name, description, userIds = [],reporter = req.user?._id } = req.body;
+        const { id, name, description,client, userIds = [],reporter = req.user?._id } = req.body;
         const slug = slugify(name);
 
         if (!Array.isArray(userIds) || userIds.some(id => !Types.ObjectId.isValid(id))) {
@@ -46,6 +46,8 @@ export const createdProject = async (req: ProjectCreateRequest, res: Response, n
             existingProject.slug = slug;
             existingProject.description = description;
             existingProject.reporter = reporter;
+            existingProject.client = client;
+            existingProject.isInhouse = client ? false : true;
 
             await existingProject.save();
             if (userIds.length > 0) {
@@ -72,6 +74,8 @@ export const createdProject = async (req: ProjectCreateRequest, res: Response, n
                 slug,
                 description,
                 reporter,
+                client,
+                isInhouse: client ? false : true
             });
 
             await newProject.save();
@@ -96,15 +100,7 @@ export const getProject = async (req: CustomRequest, res: Response, next: NextFu
 
         if (user?.role === 'team_lead' || user?.role === 'manager') {
             projects = await Project.find().populate('reporter', 'fullName email');
-            // for (const project of projects) {
-            //     const projectMembers = await ProjectMember.find({projectId: project?._id}).populate({
-            //         path: 'userId',
-            //         select: "fullName"
-            //     });
-            //     // var projectsWithEmployees = {project, projectMembers}
-            //     console.log(projectMembers,"projectsWithEmployees");
-                
-            // }
+
             const projectsWithMembers = await Promise.all(projects.map(async (project) => {
                 const projectMembers = await ProjectMember.find({ projectId: project._id }).populate('userId', 'fullName').exec() as IProjectMember[];
                 return {

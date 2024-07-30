@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { Alert, FormRow, FormRowSelect } from "../../components";
-import EmployeeTable from "../../components/EmployeeTable";
 
 const initialEmployeeState = {
   fullName: "",
@@ -14,7 +13,6 @@ const initialEmployeeState = {
 
 function AddEmployee() {
   const [values, setValues] = useState(initialEmployeeState);
-  const [employees, setEmployees] = useState([]);
   const {
     showAlert,
     isLoading,
@@ -23,25 +21,6 @@ function AddEmployee() {
     registerEmployee,
     getEmployee
   } = useAppContext();
-
-
-  useEffect(async ()=>{
-    const dd = await getEmployee()
-    console.log(dd);
-  },[])
-
-  // useEffect(() => {
-  //   const fetchEmployees = async () => {
-  //     try {
-  //       const { data } = await getEmployee();
-  //       setEmployees(data.response || []);
-  //     } catch (error) {
-  //       console.error("Error fetching employees:", error);
-  //     }
-  //   };
-
-  //   fetchEmployees();
-  // }, []);
 
 
   const handleSubmit = (e) => {
@@ -119,7 +98,6 @@ function AddEmployee() {
           </div>
         </div>
       </form>
-      <EmployeeTable employees={employees} />
     </Wrapper>
     
   );

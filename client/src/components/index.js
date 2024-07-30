@@ -7,10 +7,7 @@ import SmallSidebar from './SmallSidebar';
 import BigSidebar from './BigSidebar';
 import SearchContainer from './SearchContainer';
 import JobsContainer from './EmployeesContainer';
-import StatsContainer from './StatsContainer';
-import ChartsContainer from './ChartsContainer';
 import Loading from './Loading';
-import AdminStatsContainer from './AdminStatsContainer';
 
 export {
     Logo,
@@ -22,8 +19,5 @@ export {
     BigSidebar,
     SearchContainer,
     JobsContainer,
-    StatsContainer,
-    ChartsContainer,
     Loading,
-    AdminStatsContainer,
 }

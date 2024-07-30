@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Landing, Login, Error, ProtectedRoute } from "./pages";
 import {
-  Addjob,
+  Employee,
   Alljobs,
   Profile,
   SharedLayout,
@@ -20,7 +20,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route exact path="add-employee" element={<Addjob />}></Route>
+          <Route exact path="employee" element={<Employee />}></Route>
           <Route exact path="all-jobs" element={<Alljobs />}></Route>
           <Route exact path="profile" element={<Profile />}></Route>
           <Route exact path="admin" element={<Admin />}></Route>

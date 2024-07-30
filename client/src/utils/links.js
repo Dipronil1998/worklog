@@ -13,8 +13,8 @@ const links = [
   },
   {
     id: 2,
-    text: 'add employee',
-    path: 'add-employee',
+    text: 'employee',
+    path: 'employee',
     icon: <MdQueryStats />,
   },
   {

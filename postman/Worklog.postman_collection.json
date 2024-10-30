@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"projectId\": \"66a50807a40453cbc0e7e5e7\",\n    \"remarks\": \"start the task successfully.\"\n}\n",
+							"raw": "{\n    \"projectId\": \"67226066ad76d199b75d5636\",\n    \"remarks\": \"start the task successfully.\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -43,7 +43,119 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "worklog",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"projectId\": \"67226066ad76d199b75d5636\",\n    \"remarks\": \"start the task successfully.\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/worklog",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"worklog"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18d-8220+z/nk+F4Jh4RNSj9jnHfnq4\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Oct 2024 16:36:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Worklog updated successfully\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": {\n        \"_id\": \"67226087ad76d199b75d563c\",\n        \"projectId\": \"67226066ad76d199b75d5636\",\n        \"userId\": \"67225f92ad76d199b75d5631\",\n        \"startTime\": \"2024-10-30T16:36:23.338Z\",\n        \"endTime\": \"2024-10-30T16:36:33.021Z\",\n        \"remarks\": \"start the task successfully.\",\n        \"createdAt\": \"2024-10-30T16:36:23.341Z\",\n        \"updatedAt\": \"2024-10-30T16:36:33.024Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "Get all worklos for all employee",
@@ -87,7 +199,410 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get all worklos for all employee",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/api/worklog",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"worklog"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-07-25",
+											"disabled": true
+										},
+										{
+											"key": "endDate",
+											"value": "2024-07-26",
+											"disabled": true
+										},
+										{
+											"key": "userId",
+											"value": "66a4a079934a75ea4ee9ee58",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "582"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"246-9AAfeFqCTSH6F1150O+6pkGPpKo\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Oct 2024 16:37:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Worklogs retrieved successfully\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": [\n        {\n            \"_id\": \"67226087ad76d199b75d563c\",\n            \"projectId\": {\n                \"_id\": \"67226066ad76d199b75d5636\",\n                \"name\": \"test\",\n                \"reporter\": {\n                    \"_id\": \"67225f92ad76d199b75d5631\",\n                    \"fullName\": \"Dipronil Das\"\n                }\n            },\n            \"userId\": {\n                \"_id\": \"67225f92ad76d199b75d5631\",\n                \"fullName\": \"Dipronil Das\",\n                \"email\": \"dipronil.das@techwens.in\",\n                \"role\": \"manager\"\n            },\n            \"startTime\": \"2024-10-30T16:36:23.338Z\",\n            \"endTime\": \"2024-10-30T16:36:33.021Z\",\n            \"remarks\": \"start the task successfully.\",\n            \"createdAt\": \"2024-10-30T16:36:23.341Z\",\n            \"updatedAt\": \"2024-10-30T16:36:33.024Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get worklos by projectwise",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/worklog/67226066ad76d199b75d5636",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"worklog",
+								"67226066ad76d199b75d5636"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-07-25",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2024-07-26",
+									"disabled": true
+								},
+								{
+									"key": "userId",
+									"value": "66a4a079934a75ea4ee9ee58",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get worklos by projectwise",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/api/worklog/66a8d69a534b5d2abbddb638",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"worklog",
+										"66a8d69a534b5d2abbddb638"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-07-25",
+											"disabled": true
+										},
+										{
+											"key": "endDate",
+											"value": "2024-07-26",
+											"disabled": true
+										},
+										{
+											"key": "userId",
+											"value": "66a4a079934a75ea4ee9ee58",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1369"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"559-Veyx2dhEg2Z1SrLyzauqo5Fh4/U\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 Aug 2024 09:47:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Worklogs retrieved successfully by projectwise.\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": [\n        {\n            \"_id\": \"66ab59a42f4e2c493192640f\",\n            \"projectId\": \"66a8d69a534b5d2abbddb638\",\n            \"userId\": \"66a7213bede4d397a9e785c7\",\n            \"startTime\": \"2024-08-01T09:47:16.702Z\",\n            \"endTime\": null,\n            \"remarks\": \"start the task successfully.\",\n            \"createdAt\": \"2024-08-01T09:47:16.704Z\",\n            \"updatedAt\": \"2024-08-01T09:47:16.704Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"66ab599e2f4e2c4931926408\",\n            \"projectId\": \"66a8d69a534b5d2abbddb638\",\n            \"userId\": \"66a7213bede4d397a9e785c7\",\n            \"startTime\": \"2024-08-01T09:47:10.089Z\",\n            \"endTime\": \"2024-08-01T09:47:14.508Z\",\n            \"remarks\": \"start the task successfully.\",\n            \"createdAt\": \"2024-08-01T09:47:10.089Z\",\n            \"updatedAt\": \"2024-08-01T09:47:14.509Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"66ab59972f4e2c4931926401\",\n            \"projectId\": \"66a8d69a534b5d2abbddb638\",\n            \"userId\": \"66a7213bede4d397a9e785c7\",\n            \"startTime\": \"2024-08-01T09:47:03.091Z\",\n            \"endTime\": \"2024-08-01T09:47:06.612Z\",\n            \"remarks\": \"start the task successfully.\",\n            \"createdAt\": \"2024-08-01T09:47:03.092Z\",\n            \"updatedAt\": \"2024-08-01T09:47:06.613Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"66ab54972f4e2c4931926338\",\n            \"projectId\": \"66a8d69a534b5d2abbddb638\",\n            \"userId\": \"66a7213bede4d397a9e785c7\",\n            \"startTime\": \"2024-08-01T09:25:43.013Z\",\n            \"endTime\": \"2024-08-01T09:25:46.713Z\",\n            \"remarks\": \"start the task successfully.\",\n            \"createdAt\": \"2024-08-01T09:25:43.016Z\",\n            \"updatedAt\": \"2024-08-01T09:25:46.714Z\",\n            \"__v\": 0\n        }\n    ],\n    \"additional\": {\n        \"duration\": \"00:00\"\n    }\n}"
+						},
+						{
+							"name": "Get worklos by projectwise",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/worklog/67226066ad76d199b75d5636",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"worklog",
+										"67226066ad76d199b75d5636"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-07-25",
+											"disabled": true
+										},
+										{
+											"key": "endDate",
+											"value": "2024-07-26",
+											"disabled": true
+										},
+										{
+											"key": "userId",
+											"value": "66a4a079934a75ea4ee9ee58",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "452"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c4-5qpC1nqQUtLIYhvxx+/ABeF5m+k\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Oct 2024 16:38:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Worklogs retrieved successfully by projectwise.\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": [\n        {\n            \"_id\": \"67226087ad76d199b75d563c\",\n            \"projectId\": \"67226066ad76d199b75d5636\",\n            \"userId\": \"67225f92ad76d199b75d5631\",\n            \"startTime\": \"2024-10-30T16:36:23.338Z\",\n            \"endTime\": \"2024-10-30T16:36:33.021Z\",\n            \"remarks\": \"start the task successfully.\",\n            \"createdAt\": \"2024-10-30T16:36:23.341Z\",\n            \"updatedAt\": \"2024-10-30T16:36:33.024Z\",\n            \"__v\": 0\n        }\n    ],\n    \"additional\": {\n        \"duration\": \"00:00\"\n    }\n}"
+						}
+					]
 				}
 			]
 		},
@@ -111,7 +626,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"_id\":\"66a7483e7daa404c6d392093\",\n    \"fullName\": \"Dipronil Das\",\n    \"email\": \"dipronil.das@techwens.in\",\n    \"phone\": \"9804633142\",\n    \"password\": \"12345678\",\n    // \"role\": \"\",\n    \"isFirstTimeUser\":false\n}\n",
+							"raw": "{\n    \"_id\":\"\",\n    \"fullName\": \"Dipronil Das\",\n    \"email\": \"dipronil.das@techwens.in\",\n    \"phone\": \"9804633142\",\n    \"password\": \"12345678\",\n    // \"role\": \"\",\n    \"isFirstTimeUser\":false\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -151,7 +666,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"loginIdentifier\": \"dipronil.das@techwens.in\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"loginIdentifier\": \"9804633142\",\n    \"password\": \"12345678\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -169,10 +684,136 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginIdentifier\": \"9804633142\",\n    \"password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8002/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "420"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a4-+0AtuQyP+Dtqh7vV3DEPybhtqnU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Oct 2024 16:33:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successfully.\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": {\n        \"_id\": \"67225f92ad76d199b75d5631\",\n        \"fullName\": \"Dipronil Das\",\n        \"email\": \"dipronil.das@techwens.in\",\n        \"phone\": \"9804633142\",\n        \"role\": \"manager\",\n        \"isFirstTimeUser\": false\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzIyNWY5MmFkNzZkMTk5Yjc1ZDU2MzEiLCJpYXQiOjE3MzAzMDYwMjYsImV4cCI6MTczMTYwMjAyNn0.vD1L_h-RawFrxWx-0WHtCCW4fc9Lch3qaUQaN7zeYbA\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()",
+									"pm.environment.set(\"token\", '');"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -262,7 +903,111 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get all employee",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/api/auth/employee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"api",
+										"auth",
+										"employee"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "220"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"dc-78nfsIPGMJIuNlaGShmULtQrgdE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Oct 2024 16:39:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Users retrieved successfully\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": [\n        {\n            \"_id\": \"67225f92ad76d199b75d5631\",\n            \"fullName\": \"Dipronil Das\",\n            \"email\": \"dipronil.das@techwens.in\",\n            \"phone\": \"9804633142\",\n            \"role\": \"manager\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Get employee information",
@@ -315,7 +1060,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\":\"66a53136dab77b583776c8ca\",\n    \"name\": \"New Project\",\n    \"description\": \"This is a new project\",\n    \"userIds\":[\"66a4a079934a75ea4ee9ee57\"]\n}\n",
+							"raw": "{\n    \"id\":\"\",\n    \"name\": \"test\",\n    \"description\": \"This is a techbase project\",\n    \"userIds\":[\"67225f92ad76d199b75d5631\"],\n    \"client\":\"\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -359,7 +1104,107 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get project",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/project",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"project"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3225"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c99-sggPH3M+cVsm99aYk4yjTMdVe+g\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 Aug 2024 09:27:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Projects retrieved successfully\",\n    \"status\": true,\n    \"statusCode\": 200,\n    \"response\": [\n        {\n            \"_id\": \"66a8d679534b5d2abbddb629\",\n            \"name\": \"LG\",\n            \"slug\": \"lg\",\n            \"description\": \"This is a techbase project\",\n            \"client\": \"cyrus\",\n            \"isInhouse\": false,\n            \"reporter\": {\n                \"_id\": \"66a7213bede4d397a9e785c7\",\n                \"fullName\": \"Krishendu Mondol\",\n                \"email\": \"krishnendu.mondal@techwens.in\"\n            },\n            \"createdAt\": \"2024-07-30T12:03:06.050Z\",\n            \"updatedAt\": \"2024-07-30T12:03:06.050Z\",\n            \"__v\": 0,\n            \"projectMembers\": [\n                {\n                    \"_id\": \"66a8d67a534b5d2abbddb62b\",\n                    \"userId\": {\n                        \"_id\": \"66a7483e7daa404c6d392093\",\n                        \"fullName\": \"Dipronil Das\"\n                    },\n                    \"projectId\": \"66a8d679534b5d2abbddb629\",\n                    \"__v\": 0\n                }\n            ]\n        },\n        {\n            \"_id\": \"66a8d69a534b5d2abbddb638\",\n            \"name\": \"test\",\n            \"slug\": \"test\",\n            \"description\": \"This is a techbase project\",\n            \"client\": \"\",\n            \"isInhouse\": true,\n            \"reporter\": {\n                \"_id\": \"66a7213bede4d397a9e785c7\",\n                \"fullName\": \"Krishendu Mondol\",\n                \"email\": \"krishnendu.mondal@techwens.in\"\n            },\n            \"createdAt\": \"2024-07-30T12:03:38.376Z\",\n            \"updatedAt\": \"2024-07-30T12:03:38.376Z\",\n            \"__v\": 0,\n            \"projectMembers\": [\n                {\n                    \"_id\": \"66a8d69a534b5d2abbddb63a\",\n                    \"userId\": {\n                        \"_id\": \"66a7483e7daa404c6d392093\",\n                        \"fullName\": \"Dipronil Das\"\n                    },\n                    \"projectId\": \"66a8d69a534b5d2abbddb638\",\n                    \"__v\": 0\n                }\n            ]\n        },\n        {\n            \"_id\": \"66a8e4b0534b5d2abbddb66d\",\n            \"name\": \"Xfer\",\n            \"slug\": \"xfer\",\n            \"description\": \"This is a new project\",\n            \"client\": \"Cyrus\",\n            \"isInhouse\": false,\n            \"reporter\": {\n                \"_id\": \"66a7213bede4d397a9e785c7\",\n                \"fullName\": \"Krishendu Mondol\",\n                \"email\": \"krishnendu.mondal@techwens.in\"\n            },\n            \"createdAt\": \"2024-07-30T13:03:44.406Z\",\n            \"updatedAt\": \"2024-07-30T13:03:44.406Z\",\n            \"__v\": 0,\n            \"projectMembers\": [\n                {\n                    \"_id\": \"66a8e4b0534b5d2abbddb66f\",\n                    \"userId\": {\n                        \"_id\": \"66a7483e7daa404c6d392093\",\n                        \"fullName\": \"Dipronil Das\"\n                    },\n                    \"projectId\": \"66a8e4b0534b5d2abbddb66d\",\n                    \"__v\": 0\n                }\n            ]\n        },\n        {\n            \"_id\": \"66a8e4cf534b5d2abbddb673\",\n            \"name\": \"Gain Funds\",\n            \"slug\": \"gain-funds\",\n            \"description\": \"This is a Gain Funds project\",\n            \"client\": \"Jack\",\n            \"isInhouse\": false,\n            \"reporter\": {\n                \"_id\": \"66a7213bede4d397a9e785c7\",\n                \"fullName\": \"Krishendu Mondol\",\n                \"email\": \"krishnendu.mondal@techwens.in\"\n            },\n            \"createdAt\": \"2024-07-30T13:04:15.400Z\",\n            \"updatedAt\": \"2024-07-30T13:04:15.400Z\",\n            \"__v\": 0,\n            \"projectMembers\": [\n                {\n                    \"_id\": \"66a8e4cf534b5d2abbddb675\",\n                    \"userId\": {\n                        \"_id\": \"66a7483e7daa404c6d392093\",\n                        \"fullName\": \"Dipronil Das\"\n                    },\n                    \"projectId\": \"66a8e4cf534b5d2abbddb673\",\n                    \"__v\": 0\n                }\n            ]\n        },\n        {\n            \"_id\": \"66a8e565534b5d2abbddb68a\",\n            \"name\": \"Gain Funds New\",\n            \"slug\": \"gain-funds-new\",\n            \"description\": \"This is a Gain Funds project\",\n            \"client\": \"Jack Cyrus\",\n            \"isInhouse\": false,\n            \"reporter\": {\n                \"_id\": \"66a7213bede4d397a9e785c7\",\n                \"fullName\": \"Krishendu Mondol\",\n                \"email\": \"krishnendu.mondal@techwens.in\"\n            },\n            \"createdAt\": \"2024-07-30T13:06:45.604Z\",\n            \"updatedAt\": \"2024-07-30T13:06:45.604Z\",\n            \"__v\": 0,\n            \"projectMembers\": [\n                {\n                    \"_id\": \"66a8e565534b5d2abbddb68c\",\n                    \"userId\": {\n                        \"_id\": \"66a73e4197a4499c329e2a45\",\n                        \"fullName\": \"Soumyajit Sen\"\n                    },\n                    \"projectId\": \"66a8e565534b5d2abbddb68a\",\n                    \"__v\": 0\n                }\n            ]\n        },\n        {\n            \"_id\": \"66a8e72d534b5d2abbddb6ab\",\n            \"name\": \"Doctor Admin\",\n            \"slug\": \"doctor-admin\",\n            \"description\": \"This is a Doctor App project\",\n            \"client\": \"Tanmoy Dhara\",\n            \"isInhouse\": false,\n            \"reporter\": {\n                \"_id\": \"66a7213bede4d397a9e785c7\",\n                \"fullName\": \"Krishendu Mondol\",\n                \"email\": \"krishnendu.mondal@techwens.in\"\n            },\n            \"createdAt\": \"2024-07-30T13:14:21.528Z\",\n            \"updatedAt\": \"2024-07-30T13:14:21.528Z\",\n            \"__v\": 0,\n            \"projectMembers\": [\n                {\n                    \"_id\": \"66a8e72d534b5d2abbddb6ad\",\n                    \"userId\": {\n                        \"_id\": \"66a73e4197a4499c329e2a45\",\n                        \"fullName\": \"Soumyajit Sen\"\n                    },\n                    \"projectId\": \"66a8e72d534b5d2abbddb6ab\",\n                    \"__v\": 0\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
 				}
 			]
 		}

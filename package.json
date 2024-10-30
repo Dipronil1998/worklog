@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --watch 'src/**/*.yml' --exec 'ts-node' src/index.ts -e ts,hbs,yml,yaml"
+    "dev": "nodemon --watch 'src/**/*.ts' --watch 'src/**/*.yml' --exec 'ts-node' src/index.ts -e ts,hbs,yml,yaml",
+    "dev-windows": "nodemon --watch \"src/**/*.ts\" --watch \"src/**/*.yml\" --exec \"npx ts-node\" src/index.ts -e ts,hbs,yml,yaml"
   },
   "keywords": [],
   "author": "",

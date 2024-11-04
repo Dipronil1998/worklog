@@ -130,16 +130,16 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
             return;
         }
 
-        generateTokenAndSetCookie(user._id as string, res);
+        const token = generateToken(user._id as string, res);
         logger.info('Login successfully.');
         handleSuccessMessage(res, 200, 'Login successfully.', {
-            // _id: user._id,
-            // fullName: user.fullName,
-            // email: user.email,
-            // phone: user.phone,
-            // role: user.role,
-            // isFirstTimeUser: user.isFirstTimeUser
-        });
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+            isFirstTimeUser: user.isFirstTimeUser
+        }, {token});
     } catch (error: any) {
         logger.error(error.message)
         next(error)

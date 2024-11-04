@@ -112,7 +112,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
         const { loginIdentifier, password } = req.body;
 
         if (!loginIdentifier || !password) {
-            handleErrorMessage(res, 400, "Login identifier and password are required");
+            handleErrorMessage(res, 401, "Invalid Username or Password");
             return;
         }
 
@@ -126,20 +126,20 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
         if (!user || !isPasswordCorrect) {
             logger.error("Invalid username or password")
-            handleErrorMessage(res, 400, "Invalid username or password")
+            handleErrorMessage(res, 401, "Invalid Username or Password")
             return;
         }
 
-        const token = generateToken(user._id as string, res);
+        generateTokenAndSetCookie(user._id as string, res);
         logger.info('Login successfully.');
         handleSuccessMessage(res, 200, 'Login successfully.', {
-            _id: user._id,
-            fullName: user.fullName,
-            email: user.email,
-            phone: user.phone,
-            role: user.role,
-            isFirstTimeUser: user.isFirstTimeUser
-        }, {token});
+            // _id: user._id,
+            // fullName: user.fullName,
+            // email: user.email,
+            // phone: user.phone,
+            // role: user.role,
+            // isFirstTimeUser: user.isFirstTimeUser
+        });
     } catch (error: any) {
         logger.error(error.message)
         next(error)
@@ -148,6 +148,11 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
 export const logout = async (req: LogoutRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const userId = req?.user?._id;
+        console.log(userId);
+        
+        res.cookie("jwt", "", { maxAge: 0 });
+        await User.updateOne({ _id: userId }, { lastSeen: new Date() })
         logger.info("Logged out successfully")
         handleSuccessMessage(res, 200, "Logged out successfully", {})
     } catch (error: any) {
@@ -168,11 +173,11 @@ export const changePassword = async (req: ChangePasswordRequest, res: Response, 
             return;
         }
 
-        if (!user?.isFirstTimeUser) {
-            logger.error("You already change your password.")
-            handleErrorMessage(res, 400, "You already change your password.")
-            return;
-        }
+        // if (!user?.isFirstTimeUser) {
+        //     logger.error("You already change your password.")
+        //     handleErrorMessage(res, 400, "You already change your password.")
+        //     return;
+        // }
 
         if (!password || !confirmPassword) {
             logger.error("Password and confirm password fields are required");
@@ -182,7 +187,7 @@ export const changePassword = async (req: ChangePasswordRequest, res: Response, 
 
         if (password !== confirmPassword) {
             logger.error("Passwords don't match")
-            handleErrorMessage(res, 400, "Passwords don't match")
+            handleErrorMessage(res, 400, "Passwords mismatch")
             return;
         }
 
@@ -222,7 +227,7 @@ export const employeeInfoById = async (req: Request, res: Response, next: NextFu
     try {
         const userId = req?.params?.id
         const user = await User.findById(userId).select('fullName email phone role isFirstTimeUser');
-        handleSuccessMessage(res, 200, 'Users information successfully', user);
+        handleSuccessMessage(res, 200, 'User information retrieved successfully', user);
     } catch (error) {
         next(error)
     }

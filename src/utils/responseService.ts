@@ -19,5 +19,5 @@ export const handleSuccessMessage = (res:Response, code:number, msg:string, resp
       response: 'failed',
       ...additional,
     };
-    return res.status(200).json(error);
+    return res.status(code).json(error);
   };

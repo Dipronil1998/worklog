@@ -9,33 +9,31 @@ interface AuthenticatedRequest extends Request {
 
 const protectRoute = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const authHeader = req.headers.authorization;
+        const token = req.cookies.jwt;
 
-        if (!authHeader) {
-            handleErrorMessage(res, 401, 'Unauthorized - No Token Provided');
-            return;
+        if (!token) {
+            handleErrorMessage(res, 401,'No Active Session');
+            return
         }
-
-        const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7, authHeader.length) : authHeader;
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
 
         if (!decoded) {
-            handleErrorMessage(res, 401, 'Unauthorized - Invalid Token');
+            handleErrorMessage(res,401, 'Session Expired, please login again');
             return;
         }
 
         const user = await User.findById(decoded.userId).select("-password");
 
         if (!user) {
-            handleErrorMessage(res, 404, 'User not found');
+            handleErrorMessage(res,404, 'User not found');
             return;
         }
 
         req.user = user;
         next();
-    } catch (error) {
-        next(error);
+    } catch (error:any) {
+        next(error)
     }
 };
 

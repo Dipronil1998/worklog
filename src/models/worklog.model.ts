@@ -32,7 +32,6 @@ const worklogSchema: Schema<IWorklog> = new Schema(
         },
         endTime: {
             type: Date,
-            required: true,
         },
         remarks: {
             type: String,

@@ -3,9 +3,10 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 export interface IWorklog extends Document {
     projectId: mongoose.Types.ObjectId;
     userId: mongoose.Types.ObjectId;
-    startTime: Date,
-    endTime: Date,
-    remarks: string
+    taskId: mongoose.Types.ObjectId; 
+    startTime: Date;
+    endTime: Date;
+    remarks: string;
 }
 
 const worklogSchema: Schema<IWorklog> = new Schema(
@@ -13,21 +14,29 @@ const worklogSchema: Schema<IWorklog> = new Schema(
         projectId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Project",
+            required: true,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: true,
         },
-        startTime:{
+        taskId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Task",
+            required: true, 
+        },
+        startTime: {
             type: Date,
+            required: true,
         },
-        endTime:{
+        endTime: {
             type: Date,
+            required: true,
         },
-        remarks:{
+        remarks: {
             type: String,
         },
-
     },
     { timestamps: true }
 );

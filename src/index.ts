@@ -9,6 +9,7 @@ import { errorHandler } from './utils/errorHandler';
 import authRoutes from './routes/auth.routes'
 import projectRoutes from './routes/project.routes'
 import worklogRoutes from './routes/worklog.routes'
+import taskRoutes from './routes/task.routes'
 const app = express();
 
 app.use(helmet()); 
@@ -25,6 +26,7 @@ app.get('/', (req:Request, res:Response)=>{
 app.use("/api/auth", authRoutes);
 app.use("/api/project", projectRoutes);
 app.use("/api/worklog", worklogRoutes);
+app.use("/api/task", taskRoutes);
 app.use(pageNotFound);
 app.use(errorHandler);
 

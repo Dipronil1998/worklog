@@ -134,3 +134,25 @@ export const getProject = async (req: CustomRequest, res: Response, next: NextFu
         next(error);
     }
 }
+
+export const deleteProject = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { projectId } = req.params;
+
+        const project = await Project.findById(projectId);
+        if (!project) {
+            handleErrorMessage(res, 404, 'Project not found');
+            return;
+        }
+
+        await ProjectMember.deleteMany({ projectId });
+
+        await Project.findByIdAndDelete(projectId);
+
+        logger.info('Project and associated members deleted successfully');
+        handleSuccessMessage(res, 200, 'Project and associated members deleted successfully', project);
+    } catch (error: any) {
+        logger.error(error.message);
+        next(error);
+    }
+};

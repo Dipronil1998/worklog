@@ -1,5 +1,5 @@
 import express from "express";
-import { createTask, getTasks, updateTaskStatus } from "../controllers/task.controller";
+import { createTask, getTasks, updateTaskStatus, deleteTask } from "../controllers/task.controller";
 import protectRoute from "../middleware/protectRoute";
 import { adminPermission } from "../middleware/adminPermission";
 
@@ -10,5 +10,7 @@ router.post("/", protectRoute, adminPermission, createTask);
 router.get("/", protectRoute, getTasks);
 
 router.patch("/:taskId/status", protectRoute, updateTaskStatus);
+
+router.delete("/:taskId", protectRoute, adminPermission, deleteTask);
 
 export default router;

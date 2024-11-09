@@ -83,3 +83,23 @@ export const updateTaskStatus = async (req: Request, res: Response, next: NextFu
         next(error);
     }
 };
+
+
+export const deleteTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { taskId } = req.params;
+
+        const task = await Task.findByIdAndDelete(taskId);
+        if (!task) {
+            handleErrorMessage(res, 404, "Task not found");
+            return;
+        }
+
+
+        logger.info("Task deleted successfully");
+        handleSuccessMessage(res, 200, "Task deleted successfully", task);
+    } catch (error: any) {
+        logger.error(error.message);
+        next(error);
+    }
+};

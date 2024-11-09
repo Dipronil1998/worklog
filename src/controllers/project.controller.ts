@@ -21,7 +21,7 @@ interface CustomRequest extends Request {
 
 export const createdProject = async (req: ProjectCreateRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { id, name, description,client, userIds = [],reporter = req.user?._id } = req.body;
+        const { _id, name, description,client, userIds = [],reporter = req.user?._id } = req.body;
         const slug = slugify(name);
 
         if (!Array.isArray(userIds) || userIds.some(id => !Types.ObjectId.isValid(id))) {
@@ -29,14 +29,14 @@ export const createdProject = async (req: ProjectCreateRequest, res: Response, n
             return;
         }
 
-        if (id) {
-            const existingProject = await Project.findById(id);
+        if (_id) {
+            const existingProject = await Project.findById(_id);
             if (!existingProject) {
                 handleErrorMessage(res, 404, 'Project not found.');
                 return;
             }
 
-            const slugConflict = await Project.findOne({ slug, _id: { $ne: id } });
+            const slugConflict = await Project.findOne({ slug, _id: { $ne: _id } });
             if (slugConflict) {
                 handleErrorMessage(res, 400, 'A project with this slug already exists.');
                 return;
@@ -51,12 +51,12 @@ export const createdProject = async (req: ProjectCreateRequest, res: Response, n
 
             await existingProject.save();
             if (userIds.length > 0) {
-                await ProjectMember.deleteMany({ project: id, user: { $nin: userIds } });
+                await ProjectMember.deleteMany({ project: _id, user: { $nin: userIds } });
 
                 for (const userId of userIds) {
                     await ProjectMember.findOneAndUpdate(
-                        { projectId: id, userId: userId },
-                        { projectId: id, userId: userId },
+                        { projectId: _id, userId: userId },
+                        { projectId: _id, userId: userId },
                         { upsert: true, new: true }
                     );
                 }

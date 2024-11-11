@@ -96,7 +96,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const { loginIdentifier, password } = req.body;
         if (!loginIdentifier || !password) {
-            (0, responseService_1.handleErrorMessage)(res, 400, "Login identifier and password are required");
+            (0, responseService_1.handleErrorMessage)(res, 401, "Invalid Username or Password");
             return;
         }
         const user = yield user_model_1.default.findOne({
@@ -108,7 +108,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const isPasswordCorrect = user ? yield bcryptjs_1.default.compare(password, user.password) : false;
         if (!user || !isPasswordCorrect) {
             logger_1.default.error("Invalid username or password");
-            (0, responseService_1.handleErrorMessage)(res, 400, "Invalid username or password");
+            (0, responseService_1.handleErrorMessage)(res, 401, "Invalid Username or Password");
             return;
         }
         const token = (0, generateToken_1.default)(user._id, res);
@@ -129,7 +129,12 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.login = login;
 const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
+        const userId = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a._id;
+        console.log(userId);
+        res.cookie("jwt", "", { maxAge: 0 });
+        yield user_model_1.default.updateOne({ _id: userId }, { lastSeen: new Date() });
         logger_1.default.info("Logged out successfully");
         (0, responseService_1.handleSuccessMessage)(res, 200, "Logged out successfully", {});
     }
@@ -148,11 +153,11 @@ const changePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             (0, responseService_1.handleErrorMessage)(res, 401, "Unauthorized access");
             return;
         }
-        if (!(user === null || user === void 0 ? void 0 : user.isFirstTimeUser)) {
-            logger_1.default.error("You already change your password.");
-            (0, responseService_1.handleErrorMessage)(res, 400, "You already change your password.");
-            return;
-        }
+        // if (!user?.isFirstTimeUser) {
+        //     logger.error("You already change your password.")
+        //     handleErrorMessage(res, 400, "You already change your password.")
+        //     return;
+        // }
         if (!password || !confirmPassword) {
             logger_1.default.error("Password and confirm password fields are required");
             (0, responseService_1.handleErrorMessage)(res, 400, "Password and confirm password fields are required");
@@ -160,7 +165,7 @@ const changePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         }
         if (password !== confirmPassword) {
             logger_1.default.error("Passwords don't match");
-            (0, responseService_1.handleErrorMessage)(res, 400, "Passwords don't match");
+            (0, responseService_1.handleErrorMessage)(res, 400, "Passwords mismatch");
             return;
         }
         const saltRounds = parseInt(process.env.SALT, 10);
@@ -197,7 +202,7 @@ const employeeInfoById = (req, res, next) => __awaiter(void 0, void 0, void 0, f
     try {
         const userId = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
         const user = yield user_model_1.default.findById(userId).select('fullName email phone role isFirstTimeUser');
-        (0, responseService_1.handleSuccessMessage)(res, 200, 'Users information successfully', user);
+        (0, responseService_1.handleSuccessMessage)(res, 200, 'User information retrieved successfully', user);
     }
     catch (error) {
         next(error);

@@ -10,4 +10,5 @@ const adminPermission_1 = require("../middleware/adminPermission");
 const router = express_1.default.Router();
 router.post("/", protectRoute_1.default, adminPermission_1.adminPermission, project_controller_1.createdProject);
 router.get("/", protectRoute_1.default, project_controller_1.getProject);
+router.delete("/:projectId", protectRoute_1.default, project_controller_1.deleteProject);
 exports.default = router;

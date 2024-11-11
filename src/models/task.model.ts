@@ -10,6 +10,7 @@ export interface ITask extends Document {
     endDate?: Date;
     deliveryDate: Date;
     priority: "low" | "medium" | "high";
+    files?: string[];
 }
 
 const taskSchema: Schema<ITask> = new Schema(
@@ -52,6 +53,7 @@ const taskSchema: Schema<ITask> = new Schema(
             enum: ["low", "medium", "high"],
             default: "medium",
         },
+        files: { type: [String], default: [] },
     },
     { timestamps: true }
 );

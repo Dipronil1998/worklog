@@ -22,26 +22,27 @@ const worklog = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     var _a;
     try {
         const userId = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a._id;
-        const { projectId, remarks } = req.body;
-        let worklogEntry = yield worklog_model_1.default.findOne({ userId, projectId, endTime: null });
+        const { projectId, taskId, remarks } = req.body; // Added taskId to req.body
+        let worklogEntry = yield worklog_model_1.default.findOne({ userId, projectId, taskId, endTime: null });
         if (worklogEntry) {
             worklogEntry.endTime = new Date();
             worklogEntry.remarks = remarks;
             yield worklogEntry.save();
-            logger_1.default.info('Worklog updated successfully');
-            (0, responseService_1.handleSuccessMessage)(res, 200, 'Worklog updated successfully', worklogEntry);
+            logger_1.default.info("Worklog updated successfully");
+            (0, responseService_1.handleSuccessMessage)(res, 200, "Worklog updated successfully", worklogEntry);
         }
         else {
             const newWorklog = new worklog_model_1.default({
                 userId,
                 projectId,
+                taskId,
                 startTime: new Date(),
                 endTime: null,
-                remarks
+                remarks,
             });
             yield newWorklog.save();
-            logger_1.default.info('Worklog created successfully');
-            (0, responseService_1.handleSuccessMessage)(res, 201, 'Worklog created successfully', newWorklog);
+            logger_1.default.info("Worklog created successfully");
+            (0, responseService_1.handleSuccessMessage)(res, 201, "Worklog created successfully", newWorklog);
         }
     }
     catch (error) {
@@ -57,7 +58,7 @@ const getAllWorklogs = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         const start = startDate ? new Date(startDate) : new Date(now.setHours(0, 0, 0, 0));
         const end = endDate ? new Date(endDate) : new Date(now.setHours(23, 59, 59, 999));
         const query = {
-            startTime: { $gte: start, $lte: end }
+            startTime: { $gte: start, $lte: end },
         };
         if (userId) {
             if (!mongoose_1.Types.ObjectId.isValid(userId)) {
@@ -69,19 +70,23 @@ const getAllWorklogs = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         }
         const worklogs = yield worklog_model_1.default.find(query)
             .populate({
-            path: 'userId',
-            select: 'fullName email role'
+            path: "userId",
+            select: "fullName email role",
         })
             .populate({
-            path: 'projectId',
-            select: 'name reporter',
+            path: "projectId",
+            select: "name reporter",
             populate: {
-                path: 'reporter',
-                select: 'fullName'
-            }
+                path: "reporter",
+                select: "fullName",
+            },
+        })
+            .populate({
+            path: "taskId", // Populating task details
+            select: "name status",
         });
-        logger_1.default.info('Worklogs retrieved successfully');
-        (0, responseService_1.handleSuccessMessage)(res, 200, 'Worklogs retrieved successfully', worklogs);
+        logger_1.default.info("Worklogs retrieved successfully");
+        (0, responseService_1.handleSuccessMessage)(res, 200, "Worklogs retrieved successfully", worklogs);
     }
     catch (error) {
         logger_1.default.error(error.message);
@@ -99,19 +104,26 @@ const getAllWorklogsProjectWise = (req, res, next) => __awaiter(void 0, void 0, 
         const start = new Date(now.setHours(0, 0, 0, 0));
         const end = new Date(now.setHours(23, 59, 59, 999));
         const query = {
-            projectId, userId, startTime: { $gte: start, $lte: end }
+            projectId,
+            userId,
+            startTime: { $gte: start, $lte: end },
         };
-        const worklogs = yield worklog_model_1.default.find(query).sort({ createdAt: -1 });
-        worklogs.map(worklog => {
+        const worklogs = yield worklog_model_1.default.find(query)
+            .sort({ createdAt: -1 })
+            .populate({
+            path: "taskId",
+            select: "name status",
+        });
+        worklogs.map((worklog) => {
             const sTime = new Date(worklog.startTime);
             const eTime = worklog.endTime ? new Date(worklog.endTime) : new Date();
             duration = duration + Math.abs(eTime.getTime() - sTime.getTime());
         });
-        logger_1.default.info('Worklogs retrieved successfully by projectwise.');
-        (0, responseService_1.handleSuccessMessage)(res, 200, 'Worklogs retrieved successfully by projectwise.', worklogs, {
+        logger_1.default.info("Worklogs retrieved successfully by projectwise.");
+        (0, responseService_1.handleSuccessMessage)(res, 200, "Worklogs retrieved successfully by projectwise.", worklogs, {
             additional: {
-                duration: (0, formatDuration_1.formatDuration)(duration)
-            }
+                duration: (0, formatDuration_1.formatDuration)(duration),
+            },
         });
     }
     catch (error) {

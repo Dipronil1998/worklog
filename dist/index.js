@@ -14,6 +14,8 @@ const errorHandler_1 = require("./utils/errorHandler");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const project_routes_1 = __importDefault(require("./routes/project.routes"));
 const worklog_routes_1 = __importDefault(require("./routes/worklog.routes"));
+const task_routes_1 = __importDefault(require("./routes/task.routes"));
+const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
 app.use((0, cors_1.default)());
@@ -21,12 +23,15 @@ app.use(express_1.default.json());
 dotenv_1.default.config();
 const port = process.env.PORT || 3000;
 app.use((0, cookie_parser_1.default)());
+const uploadDirectory = path_1.default.join(__dirname, "..", 'uploads');
+app.use('/uploads', express_1.default.static(uploadDirectory));
 app.get('/', (req, res) => {
     res.send('index1');
 });
 app.use("/api/auth", auth_routes_1.default);
 app.use("/api/project", project_routes_1.default);
 app.use("/api/worklog", worklog_routes_1.default);
+app.use("/api/task", task_routes_1.default);
 app.use(pageNotFound_1.pageNotFound);
 app.use(errorHandler_1.errorHandler);
 app.listen(port, () => {

@@ -24,32 +24,46 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const worklogSchema = new mongoose_1.Schema({
+const taskSchema = new mongoose_1.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+    },
+    status: {
+        type: String,
+        enum: ["pending", "in-progress", "done", "hold"],
+        default: "pending",
+    },
+    assignedTo: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     projectId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Project",
         required: true,
     },
-    userId: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
-    taskId: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "Task",
-        required: true,
-    },
-    startTime: {
+    creationDate: {
         type: Date,
-        required: true,
+        default: Date.now,
     },
-    endTime: {
+    endDate: {
         type: Date,
     },
-    remarks: {
+    deliveryDate: {
+        type: Date,
+        required: false,
+    },
+    priority: {
         type: String,
+        enum: ["low", "medium", "high"],
+        default: "medium",
     },
+    files: { type: [String], default: [] },
 }, { timestamps: true });
-const Worklog = mongoose_1.default.model("Worklog", worklogSchema);
-exports.default = Worklog;
+const Task = mongoose_1.default.model("Task", taskSchema);
+exports.default = Task;

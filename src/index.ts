@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.routes'
 import projectRoutes from './routes/project.routes'
 import worklogRoutes from './routes/worklog.routes'
 import taskRoutes from './routes/task.routes'
+import path from 'path';
 const app = express();
 
 app.use(helmet()); 
@@ -18,6 +19,9 @@ app.use(express.json());
 dotenv.config()
 const port = process.env.PORT || 3000;
 app.use(cookieParser());
+
+const uploadDirectory = path.join(__dirname, "..",'uploads');
+app.use('/uploads', express.static(uploadDirectory));
 
 app.get('/', (req:Request, res:Response)=>{
   res.send('index1')

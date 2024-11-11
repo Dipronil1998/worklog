@@ -8,6 +8,6 @@ const handleSuccessMessage = (res, code, msg, response, additional = {}) => {
 exports.handleSuccessMessage = handleSuccessMessage;
 const handleErrorMessage = (res, code, msg, additional = {}) => {
     const error = Object.assign({ message: msg || 'Something went wrong. Please try again later.', status: false, statusCode: code || 500, response: 'failed' }, additional);
-    return res.status(200).json(error);
+    return res.status(code).json(error);
 };
 exports.handleErrorMessage = handleErrorMessage;

@@ -17,6 +17,10 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
     try {
         const { name, description, projectId, assignedTo, creationDate, endDate, deliveryDate } = req.body;
         
+        const files = req.files as Express.Multer.File[];
+
+        const filePaths = files?.map(file => `/uploads/tasks/${file.filename}`); 
+
         const newTask = new Task({
             name,
             description,
@@ -25,7 +29,8 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
             creationDate,
             endDate,
             deliveryDate,
-            status: "pending" 
+            status: "pending",
+            files: filePaths,
         });
 
         await newTask.save();
@@ -94,7 +99,6 @@ export const deleteTask = async (req: Request, res: Response, next: NextFunction
             handleErrorMessage(res, 404, "Task not found");
             return;
         }
-
 
         logger.info("Task deleted successfully");
         handleSuccessMessage(res, 200, "Task deleted successfully", task);

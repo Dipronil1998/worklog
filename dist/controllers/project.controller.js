@@ -12,28 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProject = exports.createdProject = void 0;
+exports.deleteProject = exports.getProject = exports.createdProject = void 0;
 const project_model_1 = __importDefault(require("../models/project.model"));
 const projectmember_model_1 = __importDefault(require("../models/projectmember.model"));
 const responseService_1 = require("../utils/responseService");
+const logger_1 = __importDefault(require("../services/logger"));
 const slugify_1 = require("../utils/slugify");
 const mongoose_1 = require("mongoose");
 const createdProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        const { id, name, description, client, userIds = [], reporter = (_a = req.user) === null || _a === void 0 ? void 0 : _a._id } = req.body;
+        const { _id, name, description, client, userIds = [], reporter = (_a = req.user) === null || _a === void 0 ? void 0 : _a._id } = req.body;
         const slug = (0, slugify_1.slugify)(name);
         if (!Array.isArray(userIds) || userIds.some(id => !mongoose_1.Types.ObjectId.isValid(id))) {
             (0, responseService_1.handleErrorMessage)(res, 400, 'Invalid user IDs provided.');
             return;
         }
-        if (id) {
-            const existingProject = yield project_model_1.default.findById(id);
+        if (_id) {
+            const existingProject = yield project_model_1.default.findById(_id);
             if (!existingProject) {
                 (0, responseService_1.handleErrorMessage)(res, 404, 'Project not found.');
                 return;
             }
-            const slugConflict = yield project_model_1.default.findOne({ slug, _id: { $ne: id } });
+            const slugConflict = yield project_model_1.default.findOne({ slug, _id: { $ne: _id } });
             if (slugConflict) {
                 (0, responseService_1.handleErrorMessage)(res, 400, 'A project with this slug already exists.');
                 return;
@@ -46,9 +47,9 @@ const createdProject = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             existingProject.isInhouse = client ? false : true;
             yield existingProject.save();
             if (userIds.length > 0) {
-                yield projectmember_model_1.default.deleteMany({ project: id, user: { $nin: userIds } });
+                yield projectmember_model_1.default.deleteMany({ project: _id, user: { $nin: userIds } });
                 for (const userId of userIds) {
-                    yield projectmember_model_1.default.findOneAndUpdate({ projectId: id, userId: userId }, { projectId: id, userId: userId }, { upsert: true, new: true });
+                    yield projectmember_model_1.default.findOneAndUpdate({ projectId: _id, userId: userId }, { projectId: _id, userId: userId }, { upsert: true, new: true });
                 }
             }
             (0, responseService_1.handleSuccessMessage)(res, 200, 'Project updated successfully', existingProject);
@@ -116,3 +117,22 @@ const getProject = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.getProject = getProject;
+const deleteProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { projectId } = req.params;
+        const project = yield project_model_1.default.findById(projectId);
+        if (!project) {
+            (0, responseService_1.handleErrorMessage)(res, 404, 'Project not found');
+            return;
+        }
+        yield projectmember_model_1.default.deleteMany({ projectId });
+        yield project_model_1.default.findByIdAndDelete(projectId);
+        logger_1.default.info('Project and associated members deleted successfully');
+        (0, responseService_1.handleSuccessMessage)(res, 200, 'Project and associated members deleted successfully', project);
+    }
+    catch (error) {
+        logger_1.default.error(error.message);
+        next(error);
+    }
+});
+exports.deleteProject = deleteProject;

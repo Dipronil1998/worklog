@@ -17,7 +17,10 @@ interface TaskRequest extends Request {
 export const createTask = async (req: TaskRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { _id, name, description, projectId, assignedTo, creationDate, endDate, deliveryDate, comment } = req.body;
-    
+        
+        const files = req.files as Express.Multer.File[];
+        
+        const filePaths = files?.map(file => `/uploads/tasks/${file.filename}`);
 
         if(_id){
             const existingTask = await Task.findById(_id);
@@ -33,7 +36,11 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
             existingTask.creationDate = creationDate || existingTask.creationDate;
             existingTask.endDate = endDate || existingTask.endDate;
             existingTask.deliveryDate = deliveryDate || existingTask.deliveryDate;
-            // existingTask.files = filePaths || existingTask.files;
+            existingTask.files = filePaths || existingTask.files;
+
+            // if (filePaths) {
+            //     existingTask.files = [...existingTask?.files, ...filePaths];
+            // }
 
             await existingTask.save();
 
@@ -49,10 +56,6 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
             logger.info("Task updated successfully");
             handleSuccessMessage(res, 200, "Task updated successfully", existingTask);
         } else {
-            const files = req.files as Express.Multer.File[];
-
-            const filePaths = files?.map(file => `/uploads/tasks/${file.filename}`); 
-
             const newTask = new Task({
                 name,
                 description,

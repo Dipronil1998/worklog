@@ -14,7 +14,11 @@ import path from 'path';
 const app = express();
 
 app.use(helmet()); 
-app.use(cors()); 
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://sparkling-conkies-f052af.netlify.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
+  credentials: true,
+})); 
 app.use(express.json());
 dotenv.config()
 const port = process.env.PORT || 3000;

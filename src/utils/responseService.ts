@@ -8,7 +8,7 @@ export const handleSuccessMessage = (res:Response, code:number, msg:string, resp
       response,
       ...additional,
     };
-    return res.status(200).json(success);
+    return res.status(code).json(success);
   };
   
   export const handleErrorMessage = (res:Response, code:number, msg:string, additional: Record<string, any>  = {}):Response => {

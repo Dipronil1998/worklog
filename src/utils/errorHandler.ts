@@ -8,6 +8,6 @@ class HttpError extends Error {
 
 export const errorHandler = (err:HttpError, req:Request, res:Response, next:NextFunction): Response => {
     res.locals.message = err.message || "Please try again after some time";
-    const status = 200
+    const status = err.status || 500
     return handleErrorMessage(res,status,res.locals.message)
   };

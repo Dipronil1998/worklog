@@ -3,7 +3,8 @@ import Task from "../models/task.model";
 import logger from "../services/logger";
 import { handleErrorMessage, handleSuccessMessage } from "../utils/responseService";
 import { log } from "console";
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
+import AssignmentLog from "../models/AssignmentLog";
 
 interface TaskRequest extends Request {
     user?: {
@@ -13,9 +14,9 @@ interface TaskRequest extends Request {
     };
 }
 
-export const createTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const createTask = async (req: TaskRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { name, description, projectId, assignedTo, creationDate, endDate, deliveryDate } = req.body;
+        const { name, description, projectId, assignedTo, creationDate, endDate, deliveryDate, comment } = req.body;
         
         const files = req.files as Express.Multer.File[];
 
@@ -31,9 +32,20 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
             deliveryDate,
             status: "pending",
             files: filePaths,
+            createdBy: req.user?._id
         });
 
         await newTask.save();
+
+        const assignmentLog = new AssignmentLog({
+            taskId: newTask._id,
+            userId: assignedTo, 
+            assignedAt: new Date(), 
+            comment, 
+        });
+
+        await assignmentLog.save();
+
         logger.info("Task created successfully");
         handleSuccessMessage(res, 201, "Task created successfully", newTask);
     } catch (error: any) {
@@ -44,7 +56,20 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
 
 export const getTasks = async (req: TaskRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const tasks = await Task.find()
+        const userId = req.user?._id;
+        let returnTasks : any= [];
+
+        const assignmentLogs = await AssignmentLog.find({ userId: userId }).populate({
+            path: "taskId",
+            select: "_id"
+        });
+        
+        const taskIds = assignmentLogs.map(log => log.taskId._id);
+
+        const tasks = await Task.find({ $or: [
+            { _id: { $in: taskIds } }, 
+            { createdBy: userId } 
+        ] })
             .populate({
                 path: "projectId",
                 select: "name"
@@ -52,10 +77,26 @@ export const getTasks = async (req: TaskRequest, res: Response, next: NextFuncti
             .populate({
                 path: "assignedTo",
                 select: "fullName email"
+            })
+            .populate({
+                path: "createdBy",
+                select: "fullName"
             });
 
+            for (const task of tasks) {
+                const assignmentLogsForTask = await AssignmentLog.find({ taskId: task._id },{userId:1,comment:1}).populate({
+                    path: "userId",
+                    select: "fullName"
+                });
+                
+                returnTasks.push({
+                    ...task.toObject(),
+                    comments: assignmentLogsForTask   
+                });
+            }
+            
         logger.info("Tasks retrieved successfully");
-        handleSuccessMessage(res, 200, "Tasks retrieved successfully", tasks);
+        handleSuccessMessage(res, 200, "Tasks retrieved successfully", returnTasks);
     } catch (error: any) {
         logger.error(error.message);
         next(error);

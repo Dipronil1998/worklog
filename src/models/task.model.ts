@@ -11,6 +11,7 @@ export interface ITask extends Document {
     deliveryDate: Date;
     priority: "low" | "medium" | "high";
     files?: string[];
+    createdBy: mongoose.Types.ObjectId;
 }
 
 const taskSchema: Schema<ITask> = new Schema(
@@ -52,6 +53,11 @@ const taskSchema: Schema<ITask> = new Schema(
             type: String,
             enum: ["low", "medium", "high"],
             default: "medium",
+        },
+        createdBy:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
         },
         files: { type: [String], default: [] },
     },

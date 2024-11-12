@@ -16,38 +16,70 @@ interface TaskRequest extends Request {
 
 export const createTask = async (req: TaskRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { name, description, projectId, assignedTo, creationDate, endDate, deliveryDate, comment } = req.body;
-        
-        const files = req.files as Express.Multer.File[];
+        const { _id, name, description, projectId, assignedTo, creationDate, endDate, deliveryDate, comment } = req.body;
+    
 
-        const filePaths = files?.map(file => `/uploads/tasks/${file.filename}`); 
+        if(_id){
+            const existingTask = await Task.findById(_id);
+            if (!existingTask) {
+                handleErrorMessage(res, 404, 'Task not found.');
+                return;
+            }
 
-        const newTask = new Task({
-            name,
-            description,
-            projectId,
-            assignedTo,
-            creationDate,
-            endDate,
-            deliveryDate,
-            status: "pending",
-            files: filePaths,
-            createdBy: req.user?._id
-        });
+            existingTask.name = name || existingTask.name;
+            existingTask.description = description || existingTask.description;
+            existingTask.projectId = projectId || existingTask.projectId;
+            existingTask.assignedTo = assignedTo || existingTask.assignedTo;
+            existingTask.creationDate = creationDate || existingTask.creationDate;
+            existingTask.endDate = endDate || existingTask.endDate;
+            existingTask.deliveryDate = deliveryDate || existingTask.deliveryDate;
+            // existingTask.files = filePaths || existingTask.files;
 
-        await newTask.save();
+            await existingTask.save();
 
-        const assignmentLog = new AssignmentLog({
-            taskId: newTask._id,
-            userId: assignedTo, 
-            assignedAt: new Date(), 
-            comment, 
-        });
+            const assignmentLog = new AssignmentLog({
+                taskId: existingTask._id,
+                userId: assignedTo || existingTask.assignedTo, 
+                assignedAt: new Date(), 
+                comment, 
+            });
+    
+            await assignmentLog.save();
 
-        await assignmentLog.save();
+            logger.info("Task updated successfully");
+            handleSuccessMessage(res, 200, "Task updated successfully", existingTask);
+        } else {
+            const files = req.files as Express.Multer.File[];
 
-        logger.info("Task created successfully");
-        handleSuccessMessage(res, 201, "Task created successfully", newTask);
+            const filePaths = files?.map(file => `/uploads/tasks/${file.filename}`); 
+
+            const newTask = new Task({
+                name,
+                description,
+                projectId,
+                assignedTo,
+                creationDate,
+                endDate,
+                deliveryDate,
+                status: "pending",
+                files: filePaths,
+                createdBy: req.user?._id
+            });
+    
+            await newTask.save();
+    
+            const assignmentLog = new AssignmentLog({
+                taskId: newTask._id,
+                userId: assignedTo, 
+                assignedAt: new Date(), 
+                comment, 
+            });
+    
+            await assignmentLog.save();
+    
+            logger.info("Task created successfully");
+            handleSuccessMessage(res, 201, "Task created successfully", newTask);
+        }
     } catch (error: any) {
         logger.error(error.message);
         next(error);

@@ -21,7 +21,7 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
         
         const files = req.files as Express.Multer.File[];
         
-        const filePaths = files?.map(file => `/uploads/tasks/${file.filename}`);
+        const filePaths: string[] = files?.map(file => `/uploads/tasks/${file.filename}`);
 
         if(_id){
             const existingTask = await Task.findById(_id);
@@ -38,11 +38,11 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
             existingTask.endDate = endDate || existingTask.endDate;
             existingTask.deliveryDate = deliveryDate || existingTask.deliveryDate;
             existingTask.status = status || existingTask.status;
-            existingTask.files = filePaths || existingTask.files;
+            // existingTask.files = filePaths || existingTask.files;
 
-            // if (filePaths) {
-            //     existingTask.files = [...existingTask?.files, ...filePaths];
-            // }
+            if (filePaths.length > 0) {
+                existingTask.files = [...(existingTask.files || []), ...filePaths];
+            }
 
             await existingTask.save();
 

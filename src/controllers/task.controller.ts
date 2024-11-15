@@ -17,7 +17,7 @@ interface TaskRequest extends Request {
 
 export const createTask = async (req: TaskRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { _id, name, description, projectId, assignedTo, creationDate, endDate, deliveryDate, comment } = req.body;
+        const { _id, name, description, projectId, assignedTo,status= "pending", creationDate, endDate, deliveryDate, comment } = req.body;
         
         const files = req.files as Express.Multer.File[];
         
@@ -37,6 +37,7 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
             existingTask.creationDate = creationDate || existingTask.creationDate;
             existingTask.endDate = endDate || existingTask.endDate;
             existingTask.deliveryDate = deliveryDate || existingTask.deliveryDate;
+            existingTask.status = status || existingTask.status;
             existingTask.files = filePaths || existingTask.files;
 
             // if (filePaths) {
@@ -73,7 +74,7 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
                 creationDate,
                 endDate,
                 deliveryDate,
-                status: "pending",
+                status,
                 files: filePaths,
                 createdBy: req.user?._id
             });

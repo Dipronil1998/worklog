@@ -156,3 +156,28 @@ export const deleteProject = async (req: Request, res: Response, next: NextFunct
         next(error);
     }
 };
+
+export const getUserByProject = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { projectId } = req.params;
+        
+        const project = await Project.findById(projectId);
+        if (!project) {
+            handleErrorMessage(res, 404, 'Project not found');
+            return;
+        }
+
+        const projectMembers = await ProjectMember.find({ projectId }).populate({
+            path: "userId",
+            select: "fullName"
+        });
+        
+        const usernames = projectMembers.map(member => member?.userId);
+        
+        logger.info('Usernames retrieved successfully');
+        handleSuccessMessage(res, 200, 'Usernames retrieved successfully', usernames );
+    } catch (error: any) {
+        logger.error(error.message);
+        next(error);
+    }
+}

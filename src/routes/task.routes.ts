@@ -38,7 +38,7 @@ const fileFilter: multer.Options['fileFilter'] = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-router.post("/", protectRoute, adminPermission, upload.array("files", 10), createTask);  
+router.post("/", protectRoute, upload.array("files", 10), createTask);  
 router.get("/", protectRoute, getTasks);  
 router.patch("/:taskId/status", protectRoute, updateTaskStatus);  
 router.delete("/:taskId", protectRoute, adminPermission, deleteTask);  

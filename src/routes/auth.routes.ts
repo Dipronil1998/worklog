@@ -13,7 +13,7 @@ router.post("/logout", protectRoute,logout);
 
 router.post("/changePassword", protectRoute, changePassword);
 
-router.get("/employee", protectRoute, adminPermission,employeeInfo);
+router.get("/employee", protectRoute,employeeInfo);
 
 router.get("/employee/:id", protectRoute, adminPermission,employeeInfoById);
 

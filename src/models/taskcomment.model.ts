@@ -1,12 +1,12 @@
 import mongoose, { Document, Schema, Model } from "mongoose";
 
-export interface IAssignmentLog extends Document {
+export interface ITaskComment extends Document {
     taskId: mongoose.Types.ObjectId;
     userId: mongoose.Types.ObjectId;
-    assignedAt: Date;
+    comment: string;
 }
 
-const assignmentLogSchema: Schema<IAssignmentLog> = new Schema(
+const taskCommentSchema: Schema<ITaskComment> = new Schema(
     {
         taskId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -18,14 +18,15 @@ const assignmentLogSchema: Schema<IAssignmentLog> = new Schema(
             ref: "User",
             required: true,
         },
-        assignedAt: {
-            type: Date,
-            default: Date.now,
+        comment: {
+            type: String,
+            required: true,
+            trim: true,
         }
     },
     { timestamps: true }
 );
 
-const AssignmentLog: Model<IAssignmentLog> = mongoose.model<IAssignmentLog>("AssignmentLog", assignmentLogSchema);
+const TaskComment: Model<ITaskComment> = mongoose.model<ITaskComment>("TaskComment", taskCommentSchema);
 
-export default AssignmentLog;
+export default TaskComment;

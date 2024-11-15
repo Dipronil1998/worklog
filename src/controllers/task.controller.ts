@@ -5,6 +5,7 @@ import { handleErrorMessage, handleSuccessMessage } from "../utils/responseServi
 import { log } from "console";
 import mongoose, { Types } from "mongoose";
 import AssignmentLog from "../models/AssignmentLog";
+import TaskComment from "../models/taskcomment.model";
 
 interface TaskRequest extends Request {
     user?: {
@@ -48,10 +49,18 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
                 taskId: existingTask._id,
                 userId: assignedTo || existingTask.assignedTo, 
                 assignedAt: new Date(), 
-                comment, 
             });
     
             await assignmentLog.save();
+
+            if (comment) {
+                const taskComment = new TaskComment({
+                    taskId: existingTask._id,
+                    userId: req.user?._id,
+                    comment,
+                });
+                await taskComment.save();
+            }
 
             logger.info("Task updated successfully");
             handleSuccessMessage(res, 200, "Task updated successfully", existingTask);
@@ -79,6 +88,16 @@ export const createTask = async (req: TaskRequest, res: Response, next: NextFunc
             });
     
             await assignmentLog.save();
+
+            if (comment) {
+                const taskComment = new TaskComment({
+                    taskId: newTask._id,
+                    userId: req.user?._id,
+                    comment,
+                    commentedAt: new Date(),
+                });
+                await taskComment.save();
+            }
     
             logger.info("Task created successfully");
             handleSuccessMessage(res, 201, "Task created successfully", newTask);
@@ -119,16 +138,18 @@ export const getTasks = async (req: TaskRequest, res: Response, next: NextFuncti
             });
 
             for (const task of tasks) {
-                const assignmentLogsForTask = await AssignmentLog.find({ taskId: task._id },{userId:1,comment:1}).populate({
-                    path: "userId",
-                    select: "fullName"
-                });
-                
+                const comments = await TaskComment.find({ taskId: task._id })
+                    .populate({
+                        path: "userId",
+                        select: "fullName"
+                    });
+    
                 returnTasks.push({
                     ...task.toObject(),
-                    comments: assignmentLogsForTask   
+                    comments
                 });
             }
+    
             
         logger.info("Tasks retrieved successfully");
         handleSuccessMessage(res, 200, "Tasks retrieved successfully", returnTasks);
